@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+       backend:
+           image: node
+           restart: always
+           build: '../backend'
+           environment:
+                - SERVER_PORT
+           ports:
+                - '${SERVER_PORT}:${HOST_PORT}'
+       mongo:
+            image: mongo
+            restart: always
+            environment:
+                - MONGO_INITDB_ROOT_USERNAME=${DB_USER}
+                - MONGO_INITDB_ROOT_PASSWORD=${DB_PASS}
+            ports:
+                - '27017:27017'
+       nginx:
+            image: nginx
+            restart: always
+            ports:
+                - '80:80'
+                - '443:443'
